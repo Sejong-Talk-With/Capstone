@@ -48,7 +48,15 @@
                             <input type="text" class="form-control border-0 small" placeholder="지역을 검색해 보세요!" aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                                <!-- 토글 버튼  -->
+                                <button class="btn btn-primary" type="button" onclick="toggleMenu('collapseWidthExample');">
+                                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" >
+                                        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -61,7 +69,7 @@
                             <!-- Area Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">요일 별</strong> "운동장" 혼잡도</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">요일 별</strong> "어린이대공원 입구" 혼잡도</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-area">
@@ -80,7 +88,7 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">시간 별</strong> "운동장" 혼잡도</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">시간 별</strong> "어린이대공원 입구" 혼잡도</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
@@ -99,7 +107,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <h6 class="mb-3 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">실시간</strong> "운동장" 혼잡도 </h6>
+                                            <h6 class="mb-3 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">실시간</strong> "어린이대공원 입구" 혼잡도 </h6>
                                             <div><div class="h1 d-inline-block mb-0 font-weight-bold text-gray-800">250</div> <p class="mb-0 ml-2 d-inline-block small font-weight-bold"> +12 </p> </div>
                                         </div>
                                         <div class="col-auto">
@@ -159,6 +167,27 @@
         </div>
     </div>
 
+    <!-- 메뉴 -->
+    <div style="width: 100%; position: fixed; top:8%; z-index: 1; display: flex; justify-content: right;  padding-right: 15px;">
+        <div>
+            <div class="list-group" id="collapseWidthExample" style="display: none;">
+                <a href="/" type="button" class="list-group-item list-group-item-action" aria-current="true" style="width: 120px; font-size: 12px; display: flex; justify-content:center;">Map</a>
+                <a href="/statics" type="button" class="list-group-item list-group-item-action" style="width: 120px; font-size: 12px; display: flex; justify-content:center;">Statics</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function toggleMenu(id) {
+            var e = document.getElementById(id);
+            if(e.style.display == 'flex')
+                e.style.display = 'none';
+            else
+                e.style.display = 'flex';
+        }
+    </script>
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -168,6 +197,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
