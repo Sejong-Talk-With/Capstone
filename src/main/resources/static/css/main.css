@@ -1,4 +1,5 @@
 
+
 .big-circle{
     width:50px;
     height: 50px;
@@ -70,22 +71,25 @@
     background-color: white;
 }
 .m_title{
-    font-size: 27px;
+    font-size: 5vw;
     font-weight: bolder;
     color: black;
-    /*text-align: center;*/
+    display: flex;
+
+        /*text-align: center;*/
 }
 .m_text{
-    font-size: 15px;
+    font-size: 3vw;
     font-weight: bold;
     color: #858796;
     /*text-align: center;*/
 }
 .m_congestion{
     margin-top: 3px;
-    font-size: 20px;
+    font-size: 4vw;
     font-weight: bolder;
     color: #c90000;
+
     /*text-align: center;*/
 }
 .m_num{
