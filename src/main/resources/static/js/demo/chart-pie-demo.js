@@ -7,9 +7,9 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: ["30분 전", "60분 전", "90분 전"],
     datasets: [{
-      data: [55, 30, 15],
+      data: [10, 22, 68],
       backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
       hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -26,6 +26,7 @@ var myPieChart = new Chart(ctx, {
       yPadding: 15,
       displayColors: false,
       caretPadding: 10,
+
     },
     legend: {
       display: false

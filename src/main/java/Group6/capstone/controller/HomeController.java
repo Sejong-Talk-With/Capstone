@@ -18,4 +18,9 @@ public class HomeController {
     public String custom() {
         return "custom";
     }
+
+    @GetMapping("/statics")
+    public String statics() {
+        return "charts";
+    }
 }
