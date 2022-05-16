@@ -20,15 +20,17 @@ public class Point {
     // 위치정보 (위도, 경도)
     private double latitude;
     private double longitude;
+    private String imgSrc;
 
     // 생성 메서드
-    public static Point createPoint(String place, int percentage, int count, double latitude, double longitude) {
+    public static Point createPoint(String place, int percentage, int count, double latitude, double longitude, String imgSrc) {
         Point point = new Point();
         point.place = place;
         point.percentage = percentage;
         point.count = count;
         point.latitude = latitude;
         point.longitude = longitude;
+        point.imgSrc = imgSrc;
         return point;
     }
 

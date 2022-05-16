@@ -28,11 +28,11 @@ public class InitDb {
     static class InitService {
         private final EntityManager em;
         public void dbInit1() {
-            Point point1 = Point.createPoint("광개토관", 150, 42, 37.550269, 127.073362);
-            Point point2 = Point.createPoint("영실관 입구", 150, 42, 37.552101, 127.073609);
-            Point point3 = Point.createPoint("애지헌", 130, 84, 37.551001, 127.074609);
-            Point point4 = Point.createPoint("AI센터", 10, 15, 37.550257, 127.075006);
-            Point point5 = Point.createPoint("정문", 140, 84, 37.548805, 127.074895);
+            Point point1 = Point.createPoint("광개토관", 210, 52, 37.550269, 127.073362,"/img/광개토관.jpg");
+            Point point2 = Point.createPoint("영실관 입구", 150, 42, 37.552101, 127.073609,"/img/영실관.jpg");
+            Point point3 = Point.createPoint("애지헌", 130, 84, 37.551001, 127.074609,"/img/애지헌.jpg");
+            Point point4 = Point.createPoint("AI센터", 10, 15, 37.550257, 127.075006,"/img/AI센터.jpg");
+            Point point5 = Point.createPoint("정문", 140, 84, 37.548805, 127.074895,"/img/정문.jpg");
 
             List<Point> pointList = new ArrayList<>(Arrays.asList(point1,point2,point3,point4, point5));
             for (Point point : pointList) {

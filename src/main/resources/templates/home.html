@@ -31,11 +31,11 @@
 <body style="width: 100%; height: 100%;">
 
 <!-- 지도  -->
-<div style="width: 100%; height: 100%; display: flex; justify-content: center; z-index: 1;">
+<div style="width: 100%; height: 100%; display: flex; justify-content: center; z-index: 1;" onclick="f2()";>
     <div id="map" style="width: 100%; height: 100%;"></div>
 </div>
 
-<div onclick="f1()"; id="black" class="w-100 h-100 position-fixed" style="background-color: black; opacity: 0.3; top: 0px; left: 0px; display: none; z-index: 2">
+<div onclick="f1()"; id="black" class="w-100 h-100 position-fixed" style="background-color: black; opacity: 0.1; top: 0px; left: 0px; display: none; z-index: 2">
 
 </div>
 
@@ -78,18 +78,18 @@
 <div th:each="point:${pointList}" class="modal_box" th:id="'pointModal'+${point.id}" style="z-index: 3;">
     <div th:object="${point}" class="m">
         <div class="box1">
-            <img src="/img/캡처.JPG"  width="100%;" height="100%;" style="border-radius: 15px 15px 15px 15px;">
+            <img th:src="*{imgSrc}"  width="100%;" height="100%;" style="border-radius: 15px 15px 15px 15px;">
         </div>
         <div class="box2">
             <div class="m_title" th:text="*{place}">어린이대공원 입구</div>
-            <div class="m_text" th:text="'평소보다 '+ *{percentage} + '혼잡'">평소보다 350% 밀집도</div>
+            <div class="m_text" > 평소보다 <strong style="text-decoration: #5a5c69" th:text="*{percentage}+'% '"></strong> 혼잡</div>
             <div class="m_congestion" th:if="${point.percentage >= 200}">매우 혼잡</div>
-            <div class="m_congestion" th:if="${ 150 <= point.percentage and point.percentage < 200}">혼잡</div>
-            <div class="m_congestion" th:if="${ 100 <= point.percentage and point.percentage < 150}">보통</div>
-            <div class="m_congestion" th:if="${ 50 <= point.percentage and point.percentage < 100}">한산</div>
-            <div class="m_congestion" th:if="${ 0 <= point.percentage and point.percentage < 50}">매우 한산</div>
+            <div class="m_congestion" style="color: #ffc107 !important;" th:if="${ 150 <= point.percentage and point.percentage < 200}">혼잡</div>
+            <div class="m_congestion" style="color: #2e59d9 !important;" th:if="${ 100 <= point.percentage and point.percentage < 150}">보통</div>
+            <div class="m_congestion" style="color: green !important;" th:if="${ 50 <= point.percentage and point.percentage < 100}">여유</div>
+            <div class="m_congestion" style="color: green !important;" th:if="${ 0 <= point.percentage and point.percentage < 50}">매우 여유</div>
             <div class="d-flex justify-content-between">
-                <div class="m_num" th:text="*{count} + '명'">84명</div>
+                <div class="m_num" th:text="*{count} + '명' ">84명</div>
                 <a th:href="@{/statics/{id} (id=${point.id})}" type="button" class="btn text-white font-weight-bolder btn-sm btn-light" style="background-color: #c9c9c9 !important;">더 보기</a>
             </div>
         </div>
@@ -99,6 +99,11 @@
 <script type="text/javascript">
 
     var ID = 0;
+
+    function f2(){
+        var e = document.getElementById('collapseWidthExample');
+            e.style.display = 'none';
+    }
 
     function toggleMenu(id){
         var e = document.getElementById(id);
@@ -181,7 +186,12 @@
         var cus_position = new kakao.maps.LatLng(latitude,  longitude);
 
         var percentage = pointList[i].percentage;
-        var cus_content = '<button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';
+        var cus_content = '';
+        if (percentage >= 200) {cus_content = '<button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';}
+        else if (150 <= percentage && percentage < 200) {cus_content = '<button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';}
+        else if (100 <= percentage && percentage < 150) {cus_content = '<button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';}
+        else if (50 <= percentage && percentage < 100) {cus_content = '<button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button>';}
+        else { cus_content = '<button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button>';}
         console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({
