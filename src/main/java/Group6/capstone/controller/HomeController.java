@@ -1,6 +1,8 @@
 package Group6.capstone.controller;
 
+import Group6.capstone.domain.Info;
 import Group6.capstone.domain.Point;
+import Group6.capstone.repository.InfoRepository;
 import Group6.capstone.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -16,6 +19,7 @@ import java.util.List;
 public class HomeController {
 
     private final PointService pointService;
+    private final InfoRepository infoRepository;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -29,5 +33,12 @@ public class HomeController {
         Point point = pointService.findOne(id);
         model.addAttribute("point", point);
         return "statics";
+    }
+
+    @GetMapping("/infos")
+    @ResponseBody
+    public List<Info> infos() {
+        List<Info> infoList = infoRepository.selectAllSql();
+        return infoList;
     }
 }
