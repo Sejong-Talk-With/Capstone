@@ -53,7 +53,7 @@
             </div>
             <!-- 토글 버튼  -->
 
-            <button class="btn mr-3" type="button"  style="background-color: #F8F9FC; border-radius: 0px 5px 5px 0px;" onclick="toggleMenu('collapseWidthExample');">
+            <button class="btn mr-3" type="button"  style="background-color: #F8F9FC; border-radius: 0px 5px 5px 0px; z-index: 2;" onclick="toggleMenu('collapseWidthExample');">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg>
@@ -64,11 +64,11 @@
 
 
 <!-- 메뉴 -->
-<div style="width: 100%; position: fixed; top:8%; z-index: 1; display: flex; justify-content: right;  padding-right: 15px;">
+<div style="width: 100%; position: fixed; top:8.5%; z-index: 1; display: flex; justify-content: right;  padding-right: 15px;">
     <div>
         <div class="list-group" id="collapseWidthExample" style="display: none;">
-            <a href="/" type="button" class="list-group-item list-group-item-action" aria-current="true" style="width: 120px; font-size: 12px; display: flex; justify-content:center;">Map</a>
-            <a href="/statics" type="button" class="list-group-item list-group-item-action" style="width: 120px; font-size: 12px; display: flex; justify-content:center;">Statics</a>
+            <a href="/" type="button" class="list-group-item list-group-item-action" aria-current="true" style="width: 120px; font-size: 12px; display: flex; justify-content:center; color: #4e73df; font-weight: bold;">Map</a>
+            <a href="/statics" type="button" class="list-group-item list-group-item-action" style="width: 120px; font-size: 12px; display: flex; justify-content:center; color: #4e73df; font-weight: bold">Statics</a>
         </div>
     </div>
 </div>
@@ -95,6 +95,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 <script type="text/javascript">
 
@@ -201,7 +204,67 @@
     }
 </script>
 
+<script type="text/javascript">
+    playAlert = setInterval(function() {
+        var level = map.getLevel();
+        var p = document.querySelectorAll('.point');
+        var t1 = document.querySelectorAll('.text1');
+        if(level==1){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '60px';
+                p[i].style.height = '60px';
+                t1[i].style.fontSize = "18px";
+            }
+        }
+        else if(level==2){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '40px';
+                p[i].style.height = '40px';
+                t1[i].style.fontSize = "15px";
+            }
+        }
+        else if(level==3){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '30px';
+                p[i].style.height = '30px';
+                t1[i].style.fontSize = "12px";
+            }
 
+        }
+        else if(level==4){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '25px';
+                p[i].style.height = '25px';
+                t1[i].style.fontSize = "10px";
+            }
+
+        }
+        else if(level==5){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '10px';
+                p[i].style.height = '10px';
+                t1[i].style.fontSize = "8px";
+            }
+
+        }
+        else if(level==6){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '5px';
+                p[i].style.height = '5px';
+                t1[i].style.fontSize = "1px";
+            }
+
+        }
+        else if(level==7){
+            for (var i=0; i<pointList.length; i++) {
+                p[i].style.width = '1px';
+                p[i].style.height = '1px';
+                t1[i].style.fontSize = "0px";
+            }
+
+        }
+    }, 100);
+</script>
 
 
 </body>
