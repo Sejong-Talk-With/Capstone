@@ -83,8 +83,13 @@
     font-size: 27px;
     font-weight: bolder;
     color: black;
-    /*text-align: center;*/
+    overflow: hidden;
+    white-space: nowrap;
+
 }
+
+
+
 .m_text{
     font-size: 15px;
     font-weight: bold;
