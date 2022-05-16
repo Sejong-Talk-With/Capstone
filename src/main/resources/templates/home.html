@@ -35,6 +35,10 @@
     <div id="map" style="width: 100%; height: 100%;"></div>
 </div>
 
+<div onclick="f1()"; id="black" class="w-100 h-100 position-fixed" style="background-color: black; opacity: 0.3; top: 0px; left: 0px; display: none; z-index: 2">
+
+</div>
+
 <!-- 검색창 -->
 <div style="position:fixed; top:2.5%; z-index: 1; ; width: 100%; display: flex; justify-content: center; padding-left: 10px; ">
     <form class="d-sm-inline-block form-inline navbar-search" style="width: 100%;">
@@ -48,8 +52,11 @@
                 </button>
             </div>
             <!-- 토글 버튼  -->
+
             <button class="btn mr-3" type="button"  style="background-color: #F8F9FC; border-radius: 0px 5px 5px 0px;" onclick="toggleMenu('collapseWidthExample');">
-                <i class="fa fa-bars"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
             </button>
         </div>
     </form>
@@ -68,7 +75,7 @@
 
 
 <!-- 모달 -->
-<div th:each="point:${pointList}" class="modal_box" th:id="'pointModal'+${point.id}">
+<div th:each="point:${pointList}" class="modal_box" th:id="'pointModal'+${point.id}" style="z-index: 3;">
     <div th:object="${point}" class="m">
         <div class="box1">
             <img src="/img/캡처.JPG"  width="100%;" height="100%;" style="border-radius: 15px 15px 15px 15px;">
@@ -90,14 +97,43 @@
 </div>
 
 <script type="text/javascript">
-    function toggleMenu(id) {
-        console.log('id= ', id);
+
+    var ID = 0;
+
+    function toggleMenu(id){
         var e = document.getElementById(id);
-        console.log(e);
-        if(e.style.display == 'flex')
+        if(e.style.display == 'flex'){
             e.style.display = 'none';
-        else
+
+        }
+    else {
             e.style.display = 'flex';
+
+        }
+    }
+
+    function togglePoint(id){
+        console.log('id= ', id);
+        ID = id;
+        var e = document.getElementById(id);
+        var b = document.getElementById('black');
+        if(e.style.display == 'flex') {
+            e.style.display = 'none';
+            b.style.display = 'none';
+        }
+        else {
+            e.style.display = 'flex';
+            b.style.display = 'flex';
+        }
+
+    }
+
+    function f1(){
+        var e = document.getElementById(ID);
+        var b = document.getElementById("black");
+        e.style.display = 'none';
+        b.style.display = 'none';
+
     }
 </script>
 
@@ -116,6 +152,9 @@
 
 <!-- Core plugin JavaScript-->
 <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+
+
 
 <!-- Custom scripts for all pages-->
 <script src="/js/sb-admin-2.min.js"></script>
@@ -142,7 +181,7 @@
         var cus_position = new kakao.maps.LatLng(latitude,  longitude);
 
         var percentage = pointList[i].percentage;
-        var cus_content = '<button class =\"btn btn-danger point\" type=\"button\"onclick=\"toggleMenu(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';
+        var cus_content = '<button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';
         console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({

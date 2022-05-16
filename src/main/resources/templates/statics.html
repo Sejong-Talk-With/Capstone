@@ -54,8 +54,8 @@
                                 </button>
                                 <!-- 토글 버튼  -->
                                 <button class="btn btn-primary" type="button" onclick="toggleMenu('collapseWidthExample');">
-                                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" >
-                                        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                                     </svg>
                                 </button>
                             </div>
@@ -142,14 +142,11 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+
 
     <!-- 메뉴 -->
-    <div style="width: 100%; position: fixed; top:8%; z-index: 1; display: flex; justify-content: right;  padding-right: 15px;">
-        <div>
+    <div style="width: 100%; position: absolute; top:6.5%; z-index: 1; display: flex; justify-content: right;  padding-right: 15px;">
+        <div class="position-absolute" style="left: 65%; top: 0px;">
             <div class="list-group" id="collapseWidthExample" style="display: none;">
                 <a href="/" type="button" class="list-group-item list-group-item-action" aria-current="true" style="width: 120px; font-size: 12px; display: flex; justify-content:center;">Map</a>
                 <a href="/statics" type="button" class="list-group-item list-group-item-action" style="width: 120px; font-size: 12px; display: flex; justify-content:center;">Statics</a>

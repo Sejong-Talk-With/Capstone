@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto : update # update !!!! 꼭 AWS 쓸 때는 update 로 !!!!
+      ddl-auto : create # update !!!! 꼭 AWS 쓸 때는 update 로 !!!!
     properties:
       hibernate:
         format_sql : true
