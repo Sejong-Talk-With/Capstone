@@ -20,6 +20,12 @@ public class Point {
     // 위치정보 (위도, 경도)
     private double latitude;
     private double longitude;
+
+//    private double latTopLeft;
+//    private double lonTopLeft;
+//    private double latBottRight;
+//    private double lonBottRight;
+
     private String imgSrc;
 
     // 생성 메서드
@@ -33,5 +39,13 @@ public class Point {
         point.imgSrc = imgSrc;
         return point;
     }
+
+//    public void setRange(double lonTopLeft, double latTopLeft, double lonBottRight, double latBottRight) {
+//        this.lonTopLeft = lonTopLeft;
+//        this.latTopLeft = latTopLeft;
+//
+//        this.lonBottRight = lonBottRight;
+//        this.latBottRight = latBottRight;
+//    }
 
 }

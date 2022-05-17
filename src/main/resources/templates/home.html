@@ -41,11 +41,11 @@
 
 <!-- 검색창 -->
 <div style="position:fixed; top:2.5%; z-index: 1; ; width: 100%; display: flex; justify-content: center; padding-left: 10px; ">
-    <form class="d-sm-inline-block form-inline navbar-search" style="width: 100%;">
+    <div class="d-sm-inline-block form-inline navbar-search" style="width: 100%;">
         <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="원하는 장소를 입력하세요"aria-label="Search" aria-describedby="basic-addon2">
+            <input onkeypress="enterKey()" type="text" id="search_keyword" class="form-control bg-light border-0 small" placeholder="원하는 장소를 입력하세요"aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button" style="background-color: #F8F9FC; border-color: #F8F9FC;">
+                <button id="search_button" class="btn btn-primary" type="button" onclick="search_place()" style="background-color: #F8F9FC; border-color: #F8F9FC;">
                     <svg xmlns="http://www.w3.org/2000/svg" style="fill:gray;" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
@@ -59,7 +59,7 @@
                 </svg>
             </button>
         </div>
-    </form>
+    </div>
 </div>
 
 
@@ -112,11 +112,9 @@
         var e = document.getElementById(id);
         if(e.style.display == 'flex'){
             e.style.display = 'none';
-
         }
     else {
             e.style.display = 'flex';
-
         }
     }
 
@@ -145,13 +143,6 @@
     }
 </script>
 
-<!-- Page level plugins -->
-<script src="/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/js/demo/chart-area-demo.js"></script>
-<script src="/js/demo/chart-pie-demo.js"></script>
-<script src="/js/demo/chart-bar-demo.js"></script>
 
 
 <!-- Bootstrap core JavaScript-->
@@ -160,7 +151,6 @@
 
 <!-- Core plugin JavaScript-->
 <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
 
 
 
@@ -202,6 +192,32 @@
             content: cus_content,
         }).setMap(map);
     }
+
+    function search_place() {
+        var keyword = $("#search_keyword").val()
+        var input = document.getElementById('search_keyword');
+        input.value = null;
+        if (keyword.length < 2) {
+            alert('2글자 이상 입력해주세요.');
+            return;
+        }
+        for (var i=0; i<pointList.length; i++){
+            if (pointList[i].place.includes(keyword)) {
+                togglePoint('pointModal'+pointList[i].id);
+                return;
+            }
+        }
+        alert('해당 장소에 대한 정보가 없습니다.');
+    }
+
+    function enterKey() {
+        console.log('key');
+        if (window.event.keyCode == 13) {
+            $("#search_button").click();
+        }
+
+    }
+
 </script>
 
 <script type="text/javascript">
@@ -265,6 +281,9 @@
         }
     }, 100);
 </script>
+
+
+
 
 
 </body>

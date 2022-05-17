@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -42,12 +43,12 @@
                 <!-- Begin Page Content -->
                 <div class="container p-3">
 
-                    <!-- Page Heading -->
-                    <form class="mb-3">
+                    <!-- 검색 -->
+                    <div class="mb-3">
                         <div class="input-group">
-                            <input type="text" class="form-control border-0 small" placeholder="지역을 검색해 보세요!" aria-label="Search" aria-describedby="basic-addon2">
+                            <input onkeypress="enterKey()" type="text" id="search_keyword" class="form-control bg-light border-0 small" placeholder="원하는 장소를 입력하세요"aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" type="button" onclick="search_place()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                     </svg>
@@ -60,24 +61,48 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
+
                     <!-- Content Row -->
                     <div class="row">
 
-                        <div class="col-xl-8 col-lg-7">
+                        <!-- Live Count -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="mb-3 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">실시간</strong> <span class="ml-1 h5 font-weight-bolder">"<span th:text="${point.place}">어린이대공원 입구</span>"</span> 혼잡도 </h6>
+                                                <button th:onclick="|javascript:live_count(${point.id})|" type="button" class="btn mb-3 text-white font-weight-bold p-1 " style="background-color: #b9b9b9 !important;">
+                                                    <svg id="live_svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="fill:darkred;" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                                        <circle cx="8" cy="8" r="8"/>
+                                                    </svg>
+                                                    &nbsp;LIVE
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <div id="counted_num" class="h1 d-inline-block mb-0 font-weight-bold text-gray-800" th:text="${counted}" >14</div>
+                                                <p id="changed_num" class="mb-0 ml-2 d-inline-block small font-weight-bold"> +0 </p> </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <!-- Area Chart -->
+                        <!-- Area Chart -->
+                        <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">요일 별</strong> "어린이대공원 입구" 혼잡도</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">요일 별</strong> <span class="ml-1 h5 font-weight-bolder">"<span th:text="${point.place}">어린이대공원 입구</span>"</span> 혼잡도</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-area">
                                         <canvas id="myAreaChart"></canvas>
                                     </div>
-<!--                                    <hr>-->
-<!--                                    Styling for the area chart can be found in the
-                                    <code>/js/demo/chart-area-demo.js</code> file.-->
                                 </div>
                             </div>
 
@@ -88,31 +113,12 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">시간 별</strong> "어린이대공원 입구" 혼잡도</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">시간 별</strong> <span class="ml-1 h5 font-weight-bolder">"<span th:text="${point.place}">어린이대공원 입구</span>"</span> 혼잡도</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4">
                                         <canvas id="myPieChart"></canvas>
-                                    </div>
-<!--                                    <hr>-->
-<!--                                    Styling for the donut chart can be found in the-->
-<!--                                    <code>/js/demo/chart-pie-demo.js</code> file.-->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <h6 class="mb-3 font-weight-bold text-primary"> <strong class="rounded p-1 bg-primary text-white">실시간</strong> "어린이대공원 입구" 혼잡도 </h6>
-                                            <div><div class="h1 d-inline-block mb-0 font-weight-bold text-gray-800">250</div> <p class="mb-0 ml-2 d-inline-block small font-weight-bold"> +12 </p> </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -121,23 +127,10 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
-
-<!--            &lt;!&ndash; Footer &ndash;&gt;-->
-<!--            <footer class="sticky-footer bg-white">-->
-<!--                <div class="container my-auto">-->
-<!--                    <div class="copyright text-center my-auto">-->
-<!--                        <span>Copyright &copy; Your Website 2020</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </footer>-->
-<!--            &lt;!&ndash; End of Footer &ndash;&gt;-->
 
         </div>
-        <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -164,7 +157,6 @@
         }
     </script>
 
-
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -179,11 +171,209 @@
     <!-- Page level plugins -->
     <script src="/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
+    <!-- Area Chart js -->
     <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
-    <script src="/js/demo/chart-bar-demo.js"></script>
+    <script>
+        function enterKey() {
+            if (window.event.keyCode == 13) {
+                $("#search_button").click();
+            }
 
+        }
+    // Area Chart Example
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Mon", "Tues", "Wed", "Thur", "Fri"],
+                datasets: [{
+                    label: "측정 인원",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: [0, 132, 23, 54, 22],
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return number_format(value) + '명';
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + '명';
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Pie Chart js -->
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        // Pie Chart Example
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["1시간 전", "2시간 전", "3시간 전"],
+                datasets: [{
+                    data: [10, 22, 68],
+                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+
+                },
+                legend: {
+                    display: false
+                },
+                cutoutPercentage: 80,
+            },
+        });
+    </script>
+    <script th:inline="javascript" type="text/javascript">
+        var pointList = [[ ${pointList} ]];
+        var live = false;
+
+        var interval;
+
+        function live_count(id) {
+            live = !live;
+            if (live) {
+
+                var liveSvg = document.getElementById('live_svg');
+                liveSvg.style.fill = "green";
+
+                interval = setInterval(function () {
+                    $.ajax({
+                        url: '/info-live/' + id,
+                        type: "GET"
+                    })
+                        .done(function (response) {
+                            var obj1 = document.getElementById('counted_num');
+                            var obj2 = document.getElementById('changed_num');
+                            var changed_num = response - parseInt(obj1.textContent);
+                            var result_changed;
+                            if (changed_num >= 0) {
+                                result_changed = '+' + changed_num;
+                            } else {
+                                result_changed = changed_num;
+                            }
+                            $('#counted_num').replaceWith(
+                                '<div id="counted_num" class="h1 d-inline-block mb-0 font-weight-bold text-gray-800">' + response + '</div>'
+                                );
+                            $('#changed_num').replaceWith(
+                                '<p id="changed_num" class="mb-0 ml-2 d-inline-block small font-weight-bold">' + result_changed + '</p>'
+                            )
+                            console.log(response, result_changed, changed_num);
+                        });
+                }, 3000)
+
+            } else {
+                var liveSvg = document.getElementById('live_svg');
+                liveSvg.style.fill = "darkred";
+
+                clearInterval(interval);
+            }
+        }
+
+        function search_place() {
+            var keyword = $("#search_keyword").val();
+            var input = document.getElementById('search_keyword');
+            input.value = null;
+            if (keyword.length < 2) {
+                alert('2글자 이상 입력해주세요.');
+                return;
+            }
+            for (var i=0; i<pointList.length; i++){
+                if (pointList[i].place.includes(keyword)) {
+                    location.href = '/statics/'+pointList[i].id;
+                    return;
+                }
+            }
+            alert('해당 장소에 대한 정보가 없습니다.');
+        }
+
+    </script>
 </body>
 
 </html>
