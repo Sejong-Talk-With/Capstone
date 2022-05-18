@@ -25,7 +25,7 @@ public class InfoService {
 //        double lonBottRight = point.getLonBottRight();
 //        double latBottRight = point.getLatBottRight();
 
-        List<Info> infoList = infoRepository.getLiveInfoTemp();
-        return Math.round(infoList.size()/100);
+        List<Info> infoList = infoRepository.getLiveInfo();
+        return infoList.size(); //Math.round(infoList.size()/100);
     }
 }
