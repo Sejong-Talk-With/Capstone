@@ -34,7 +34,7 @@ public class HomeController {
     @GetMapping("/statics")
     public String statics(Model model) {
         List<Point> pointList = pointService.findAll();
-        Point point = pointService.findOne(372L);
+        Point point = pointService.findOne(383L);
         int counted = infoService.getLiveCount();
         model.addAttribute("pointList", pointList);
         model.addAttribute("point", point);
