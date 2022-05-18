@@ -20,6 +20,26 @@
         body {
             font-family: 'NanumSquareRound' !important;
         }
+
+        @keyframes move_num {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 100%, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translateZ(0);
+            }
+        }
+
+
+        #changed_num{
+            animation-duration: 2s;
+            animation-name: move_num;
+
+        }
+
+
     </style>
 
     <!-- Custom styles for this template-->
