@@ -20,7 +20,7 @@ public class InfoService {
     private final PointService pointService;
 
     public List<Info> getLiveCountAll() {
-        return infoRepository.getLiveInfo();
+        return infoRepository.getLiveInfoTemp();
 
     }
     public int getLiveCountHome(Long id) {
@@ -30,7 +30,7 @@ public class InfoService {
         double lonBottRight = point.getLonBottRight();
         double latBottRight = point.getLatBottRight();
 
-        List<Info> infoList = infoRepository.getLiveInfo();
+        List<Info> infoList = infoRepository.getLiveInfoTemp();
 
         int cnt = 0;
         for (Info info : infoList) {

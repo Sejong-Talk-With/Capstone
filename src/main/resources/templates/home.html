@@ -98,7 +98,8 @@
 
 
 
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
+
 
     var ID = 0;
 
@@ -160,7 +161,9 @@
 <script src="/js/sb-admin-2.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=80205775122803726af920dd7316f936"></script>
 <script th:inline="javascript" type="text/javascript">
+
     var pointList = [[ ${pointList} ]];
+
     // console.log(pointList);
     var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -182,11 +185,11 @@
 
         var percentage = pointList[i].percentage;
         var cus_content = '';
-        if (percentage >= 200) {cus_content = '<div class="ex-mark"><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (150 <= percentage && percentage < 200) {cus_content = '<div class="ex-mark"><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (100 <= percentage && percentage < 150) {cus_content = '<div class="ex-mark"><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (50 <= percentage && percentage < 100) {cus_content = '<div class="ex-mark"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
-        else { cus_content = '<div class="ex-mark"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+        if (percentage >= 200) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (150 <= percentage && percentage < 200) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (100 <= percentage && percentage < 150) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (50 <= percentage && percentage < 100) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+        else { cus_content = '<div id="point'+ id +'"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
         // console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({
@@ -194,6 +197,42 @@
             content: cus_content,
         }).setMap(map);
     }
+
+    var interval;
+    $( document ).ready(function detection_change() {
+        interval = setInterval(function () {
+            $.ajax({
+                url: '/infos',
+                type: "GET"
+            })
+                .done(function (response) {
+                    console.log(response)
+                    for (var i = 0; i < pointList.length; i++) {
+                        if ($('#point' + pointList[i].id).hasClass('ex-mark')) {
+                            $('#point' + pointList[i].id).removeClass('ex-mark');
+                        }
+                    }
+
+                    if (response.count != 0) {
+                        var infoLon = response.data[0].lon;
+                        var infoLat = response.data[0].lat;
+
+                        for (var i = 0; i < pointList.length; i++) {
+                            var lonTopLeft = pointList[i].lonTopLeft;
+                            var latTopLeft = pointList[i].latTopLeft;
+                            var lonBottRight = pointList[i].lonBottRight;
+                            var latBottRight = pointList[i].latBottRight;
+
+                            if ((infoLat >= latTopLeft & infoLat <= latBottRight)
+                                & (infoLon >= lonBottRight & infoLon <= lonTopLeft)) {
+                                $('#point' + pointList[i].id).addClass('ex-mark');
+                            }
+
+                        }
+                    }
+                });
+        }, 2000)
+    })
 
     function search_place() {
         var keyword = $("#search_keyword").val()
@@ -233,8 +272,11 @@
                 p[i].style.width = '60px';
                 p[i].style.height = '60px';
 
-                ex[i].style.width = '70px';
-                ex[i].style.height = '70px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
+
                 t1[i].style.fontSize = "18px";
             }
         }
@@ -243,8 +285,10 @@
                 p[i].style.width = '40px';
                 p[i].style.height = '40px';
 
-                ex[i].style.width = '50px';
-                ex[i].style.height = '50px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
 
                 t1[i].style.fontSize = "15px";
             }
@@ -253,8 +297,10 @@
             for (var i=0; i<pointList.length; i++) {
                 p[i].style.width = '30px';
                 p[i].style.height = '30px';
-                ex[i].style.width = '40px';
-                ex[i].style.height = '40px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
                 t1[i].style.fontSize = "12px";
             }
 
@@ -263,8 +309,10 @@
             for (var i=0; i<pointList.length; i++) {
                 p[i].style.width = '25px';
                 p[i].style.height = '25px';
-                ex[i].style.width = '35px';
-                ex[i].style.height = '35px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
                 t1[i].style.fontSize = "10px";
             }
 
@@ -273,8 +321,10 @@
             for (var i=0; i<pointList.length; i++) {
                 p[i].style.width = '10px';
                 p[i].style.height = '10px';
-                ex[i].style.width = '20px';
-                ex[i].style.height = '20px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
                 t1[i].style.fontSize = "8px";
             }
 
@@ -283,8 +333,10 @@
             for (var i=0; i<pointList.length; i++) {
                 p[i].style.width = '5px';
                 p[i].style.height = '5px';
-                ex[i].style.width = '15px';
-                ex[i].style.height = '15px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
                 t1[i].style.fontSize = "1px";
             }
 
@@ -293,8 +345,10 @@
             for (var i=0; i<pointList.length; i++) {
                 p[i].style.width = '1px';
                 p[i].style.height = '1px';
-                ex[i].style.width = '5px';
-                ex[i].style.height = '5px';
+                if (ex[i]) {
+                    ex[i].style.width = '70px';
+                    ex[i].style.height = '70px';
+                }
                 t1[i].style.fontSize = "0px";
             }
 
