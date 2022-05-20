@@ -78,6 +78,10 @@ public class InfoService {
         List<Info> infoList = infoRepository.getLiveInfo();
 
         int cnt = 0;
+        if (infoList.size() == 0) {
+            return point.getCount();
+        }
+
         for (Info info : infoList) {
             double infoLat = info.getLat();
             double infoLon = info.getLon();

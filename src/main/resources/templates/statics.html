@@ -68,7 +68,7 @@
                         <div class="input-group">
                             <input onkeypress="enterKey()" type="text" id="search_keyword" class="form-control bg-light border-0 small" placeholder="원하는 장소를 입력하세요"aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" onclick="search_place()">
+                                <button id="search_button" class="btn btn-primary" type="button" onclick="search_place()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                     </svg>
@@ -212,7 +212,9 @@
 
     <!-- Area Chart js -->
     <script src="/js/demo/chart-area-demo.js"></script>
-    <script>
+    <script th:inline="javascript" type="text/javascript">
+        var pointList = [[ ${pointList} ]];
+        var staticsData = [[ ${staticsData}]];
         function enterKey() {
             if (window.event.keyCode == 13) {
                 $("#search_button").click();
@@ -239,7 +241,7 @@
                     pointHoverBorderColor: "rgba(78, 115, 223, 1)",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
-                    data: [0, 132, 23, 54, 22],
+                    data: [staticsData[0], staticsData[1], staticsData[2], staticsData[3], staticsData[4]],
                 }],
             },
             options: {
@@ -312,7 +314,9 @@
     </script>
 
     <!-- Pie Chart js -->
-    <script>
+    <script th:inline="javascript" type="text/javascript">
+        var pointList = [[ ${pointList} ]];
+        var staticsData = [[ ${staticsData}]];
         // Set new default font family and font color to mimic Bootstrap's default styling
         Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
         Chart.defaults.global.defaultFontColor = '#858796';
@@ -324,7 +328,7 @@
             data: {
                 labels: ["1시간 전", "2시간 전", "3시간 전"],
                 datasets: [{
-                    data: [10, 22, 68],
+                    data: [staticsData[5], staticsData[6], staticsData[7]],
                     backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
                     hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -352,6 +356,7 @@
     </script>
     <script th:inline="javascript" type="text/javascript">
         var pointList = [[ ${pointList} ]];
+        var staticsData = [[ ${staticsData}]];
         var live = false;
 
         var interval;

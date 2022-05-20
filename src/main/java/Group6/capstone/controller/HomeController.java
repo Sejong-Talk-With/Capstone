@@ -40,10 +40,12 @@ public class HomeController {
     public String statics(Model model) {
         List<Point> pointList = pointService.findAll();
         Point point = pointService.findByName("세종대 정문");
+        List<Integer> staticsData = pointService.getStaticsData("세종대 정문");
         int counted = infoService.getLiveCount(point.getId());
         model.addAttribute("pointList", pointList);
         model.addAttribute("point", point);
         model.addAttribute("counted",counted);
+        model.addAttribute("staticsData", staticsData);
 
         return "statics";
     }
@@ -52,10 +54,13 @@ public class HomeController {
     public String statics(@PathVariable("id") Long id, Model model) {
         List<Point> pointList = pointService.findAll();
         Point point = pointService.findOne(id);
+        List<Integer> staticsData = pointService.getStaticsData(point.getPlace());
         int counted = infoService.getLiveCount(id);
         model.addAttribute("pointList", pointList);
         model.addAttribute("point", point);
         model.addAttribute("counted",counted);
+        model.addAttribute("staticsData", staticsData);
+
         return "statics";
     }
 

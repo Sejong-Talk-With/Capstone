@@ -26,4 +26,8 @@ public class PointService {
     public Point findByName(String name) {
         return pointRepository.findByName(name);
     }
+
+    public List<Integer> getStaticsData(String name) {
+        return pointRepository.getStaticsData(name);
+    }
 }
