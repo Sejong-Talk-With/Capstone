@@ -119,7 +119,7 @@
     }
 
     function togglePoint(id){
-        console.log('id= ', id);
+        // console.log('id= ', id);
         ID = id;
         var e = document.getElementById(id);
         var b = document.getElementById('black');
@@ -159,7 +159,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=80205775122803726af920dd7316f936"></script>
 <script th:inline="javascript" type="text/javascript">
     var pointList = [[ ${pointList} ]];
-    console.log(pointList);
+    // console.log(pointList);
     var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     var options = { //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(37.551126, 127.073899), //지도의 중심좌표. (세종대학교 고정)
@@ -172,7 +172,7 @@
 
     for (var i=0; i<pointList.length; i++){
 
-        console.log(pointList[i]);
+        // console.log(pointList[i]);
         var id = pointList[i].id;
         var latitude = pointList[i].latitude;
         var longitude = pointList[i].longitude;
@@ -185,7 +185,7 @@
         else if (100 <= percentage && percentage < 150) {cus_content = '<button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';}
         else if (50 <= percentage && percentage < 100) {cus_content = '<button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button>';}
         else { cus_content = '<button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button>';}
-        console.log(id, latitude, longitude, cus_position, percentage, cus_content);
+        // console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({
             position: cus_position,
@@ -211,7 +211,7 @@
     }
 
     function enterKey() {
-        console.log('key');
+        // console.log('key');
         if (window.event.keyCode == 13) {
             $("#search_button").click();
         }
@@ -281,10 +281,6 @@
         }
     }, 100);
 </script>
-
-
-
-
 
 </body>
 

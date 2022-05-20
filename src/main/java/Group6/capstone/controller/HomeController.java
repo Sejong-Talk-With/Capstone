@@ -27,6 +27,9 @@ public class HomeController {
     @RequestMapping("/")
     public String home(Model model) {
         List<Point> pointList = pointService.findAll();
+        for (Point point : pointList) {
+            infoService.getLiveCount(point.getId());
+        }
         model.addAttribute("pointList", pointList);
         return "home";
     }
@@ -34,8 +37,8 @@ public class HomeController {
     @GetMapping("/statics")
     public String statics(Model model) {
         List<Point> pointList = pointService.findAll();
-        Point point = pointService.findOne(372L);
-        int counted = infoService.getLiveCount();
+        Point point = pointService.findByName("세종대 정문");
+        int counted = infoService.getLiveCount(point.getId());
         model.addAttribute("pointList", pointList);
         model.addAttribute("point", point);
         model.addAttribute("counted",counted);
@@ -47,7 +50,7 @@ public class HomeController {
     public String statics(@PathVariable("id") Long id, Model model) {
         List<Point> pointList = pointService.findAll();
         Point point = pointService.findOne(id);
-        int counted = infoService.getLiveCount();
+        int counted = infoService.getLiveCount(id);
         model.addAttribute("pointList", pointList);
         model.addAttribute("point", point);
         model.addAttribute("counted",counted);
@@ -69,6 +72,6 @@ public class HomeController {
     @GetMapping("/info-live/{id}")
     @ResponseBody
     public int infos(@PathVariable long id) {
-         return infoService.getLiveCount();
+         return infoService.getLiveCount(id);
     }
 }

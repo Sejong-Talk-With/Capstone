@@ -20,7 +20,7 @@ public interface InfoRepository extends JpaRepository<Info, Long> {
     public List<Info> getLiveInfo();
 
     @Query(value = "select * from info " +
-            "where info.date > '2022-05-16 16:11:20' and info.date <= '2022-05-16 16:11:30'", nativeQuery = true)
+            "where info.date > '2022-05-18 13:42:00' and info.date <= '2022-05-18 13:43:00'", nativeQuery = true)
     public List<Info> getLiveInfoTemp();
 
 }

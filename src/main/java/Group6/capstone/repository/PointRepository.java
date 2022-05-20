@@ -20,4 +20,9 @@ public class PointRepository {
     public Point findOne(Long id) {
         return em.find(Point.class, id);
     }
+
+    public Point findByName(String name) {
+        return em.createQuery("select p from Point p where p.place = :name", Point.class)
+                .setParameter("name", name).getSingleResult();
+    }
 }

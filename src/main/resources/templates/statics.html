@@ -180,6 +180,7 @@
             }
 
         }
+
     // Area Chart Example
         var ctx = document.getElementById("myAreaChart");
         var myLineChart = new Chart(ctx, {
@@ -316,23 +317,6 @@
 
         var interval;
 
-
-
-        // function blink_color1(){
-        //     var liveSvg = document.getElementById('live_svg');
-        //     liveSvg.style.fill = "yellow";
-        //     if(live==false){
-        //         clearInterval(temp1);
-        //
-        //     }
-        //     else{
-        //
-        //         temp1=setInterval(blink_color1,1000);
-        //
-        //     }
-        //
-        // }
-
         var liveSvg = document.getElementById('live_svg');
 
         var blink;
@@ -367,7 +351,7 @@
                             $('#changed_num').replaceWith(
                                 '<p id="changed_num" class="mb-0 ml-2 d-inline-block small font-weight-bold">' + result_changed + '</p>'
                             )
-                            console.log(response, result_changed, changed_num);
+                            // console.log(response, result_changed, changed_num);
                         });
                 }, 3000)
 
@@ -394,7 +378,6 @@
             }
             alert('해당 장소에 대한 정보가 없습니다.');
         }
-
     </script>
 </body>
 

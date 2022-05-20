@@ -23,4 +23,7 @@ public class PointService {
         return pointRepository.findOne(id);
     }
 
+    public Point findByName(String name) {
+        return pointRepository.findByName(name);
+    }
 }
