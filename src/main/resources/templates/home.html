@@ -81,17 +81,25 @@
         </div>
         <div class="box2">
             <div class="m_title" th:text="*{place}">어린이대공원 입구</div>
-            <div class="m_text" > 평소보다 <strong style="text-decoration: #5a5c69" th:text="*{percentage}+'% '"></strong> 혼잡</div>
+            <div class="m_text" > 평소보다 <strong style="text-decoration: #5a5c69" th:text="|*{percentage}%|"></strong> 혼잡</div>
             <div class="m_congestion" th:if="${point.percentage >= 200}">매우 혼잡</div>
             <div class="m_congestion" style="color: #ffc107 !important;" th:if="${ 150 <= point.percentage and point.percentage < 200}">혼잡</div>
             <div class="m_congestion" style="color: #2e59d9 !important;" th:if="${ 100 <= point.percentage and point.percentage < 150}">보통</div>
             <div class="m_congestion" style="color: green !important;" th:if="${ 50 <= point.percentage and point.percentage < 100}">여유</div>
             <div class="m_congestion" style="color: green !important;" th:if="${ 0 <= point.percentage and point.percentage < 50}">매우 여유</div>
             <div class="d-flex justify-content-between">
-                <div class="m_num" th:text="*{count} + '명' ">84명</div>
+                <div class="m_num" th:text="|*{count}명|">84명</div>
                 <a th:href="@{/statics/{id} (id=${point.id})}" type="button" class="btn text-white font-weight-bolder btn-sm btn-light" style="background-color: #c9c9c9 !important;">더 보기</a>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="wrap1">
+    <div class="title-box">
+        <div class='wave -one'></div>
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
     </div>
 </div>
 
@@ -185,11 +193,12 @@
 
         var percentage = pointList[i].percentage;
         var cus_content = '';
-        if (percentage >= 200) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (150 <= percentage && percentage < 200) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (100 <= percentage && percentage < 150) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (50 <= percentage && percentage < 100) {cus_content = '<div id="point'+ id +'"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
-        else { cus_content = '<div id="point'+ id +'"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+
+        if (percentage >= 200) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="point'+ id +'" style="visibility: hidden;" class="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (150 <= percentage && percentage < 200) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="point'+ id +'" style="visibility: hidden;" class="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (100 <= percentage && percentage < 150) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="point'+ id +'" style="visibility: hidden;" class="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (50 <= percentage && percentage < 100) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="point'+ id +'" style="visibility: hidden;" class="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+        else { cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="point'+ id +'" style="visibility: hidden;" class="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
         // console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({
@@ -208,14 +217,15 @@
                 .done(function (response) {
                     console.log(response)
                     for (var i = 0; i < pointList.length; i++) {
-                        if ($('#point' + pointList[i].id).hasClass('ex-mark')) {
-                            $('#point' + pointList[i].id).removeClass('ex-mark');
+                        if ($('#point' + pointList[i].id).css('visibility') == 'visible')  {
+                            $('#point' + pointList[i].id).attr("style", "visibility: hidden");
                         }
                     }
 
                     if (response.count != 0) {
                         var infoLon = response.data[0].lon;
                         var infoLat = response.data[0].lat;
+                        var infoAzi = response.data[0].azimuth;
 
                         for (var i = 0; i < pointList.length; i++) {
                             var lonTopLeft = pointList[i].lonTopLeft;
@@ -225,7 +235,16 @@
 
                             if ((infoLat >= latTopLeft & infoLat <= latBottRight)
                                 & (infoLon >= lonBottRight & infoLon <= lonTopLeft)) {
-                                $('#point' + pointList[i].id).addClass('ex-mark');
+                                if (pointList[i].place == '애지헌' && (infoAzi > 225 && infoAzi < 315)) {
+                                    $('#point' + pointList[i].id).attr("style", "visibility: visible");
+                                    break;
+                                } else if (pointList[i].place == 'AI센터' && ((infoAzi > 315 && infoAzi < 360) || (infoAzi > 0 && infoAzi < 45))) {
+                                    $('#point' + pointList[i].id).attr("style", "visibility: visible");
+                                    break;
+                                } else {
+                                    $('#point' + pointList[i].id).attr("style", "visibility: visible");
+                                    break;
+                                }
                             }
 
                         }
@@ -264,96 +283,26 @@
 <script type="text/javascript">
     playAlert = setInterval(function() {
         var level = map.getLevel();
-        var p = document.querySelectorAll('.point');
         var t1 = document.querySelectorAll('.text1');
-        var ex = document.querySelectorAll('.ex-mark');
-        if(level==1){
+        console.log(level);
+        if(level<=1){
             for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '60px';
-                p[i].style.height = '60px';
-
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
-
-                t1[i].style.fontSize = "18px";
+                t1[i].style.fontSize = '10px';
             }
         }
-        else if(level==2){
+        else if(level<=2){
             for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '40px';
-                p[i].style.height = '40px';
-
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
-
-                t1[i].style.fontSize = "15px";
+                t1[i].style.fontSize = '12px';
             }
         }
-        else if(level==3){
+        else if(level<=3){
             for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '30px';
-                p[i].style.height = '30px';
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
-                t1[i].style.fontSize = "12px";
-            }
-
-        }
-        else if(level==4){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '25px';
-                p[i].style.height = '25px';
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
                 t1[i].style.fontSize = "10px";
             }
 
         }
-        else if(level==5){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '10px';
-                p[i].style.height = '10px';
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
-                t1[i].style.fontSize = "8px";
-            }
+    }, 500);
 
-        }
-        else if(level==6){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '5px';
-                p[i].style.height = '5px';
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
-                t1[i].style.fontSize = "1px";
-            }
-
-        }
-        else if(level==7){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '1px';
-                p[i].style.height = '1px';
-                if (ex[i]) {
-                    ex[i].style.width = '70px';
-                    ex[i].style.height = '70px';
-                }
-                t1[i].style.fontSize = "0px";
-            }
-
-        }
-    }, 100);
 </script>
 
 </body>

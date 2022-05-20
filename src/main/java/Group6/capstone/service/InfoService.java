@@ -20,7 +20,7 @@ public class InfoService {
     private final PointService pointService;
 
     public List<Info> getLiveCountAll() {
-        return infoRepository.getLiveInfoTemp();
+        return infoRepository.getLiveInfo();
 
     }
     public int getLiveCountHome(Long id) {
@@ -30,9 +30,26 @@ public class InfoService {
         double lonBottRight = point.getLonBottRight();
         double latBottRight = point.getLatBottRight();
 
-        List<Info> infoList = infoRepository.getLiveInfoTemp();
+        List<Info> infoList = infoRepository.getLiveInfo();
 
         int cnt = 0;
+        if (infoList.size() == 0) {
+            return point.getCount();
+        }
+        if (point.getPlace().equals("애지헌")) {
+            double infoAzi = infoList.get(0).getAzimuth();
+            if (infoAzi < 225 || infoAzi > 315) {
+                return point.getCount();
+            }
+        }
+
+        if (point.getPlace().equals("AI센터")) {
+            double infoAzi = infoList.get(0).getAzimuth();
+            if (45 < infoAzi && infoAzi < 315) {
+                return point.getCount();
+            }
+        }
+
         for (Info info : infoList) {
             double infoLat = info.getLat();
             double infoLon = info.getLon();
@@ -40,6 +57,7 @@ public class InfoService {
                     & (infoLon >= lonBottRight & infoLon <= lonTopLeft)) {
                 cnt++;
             }
+
         }
         if (cnt != 0) {
             point.changeCount(cnt);
@@ -63,6 +81,7 @@ public class InfoService {
         for (Info info : infoList) {
             double infoLat = info.getLat();
             double infoLon = info.getLon();
+            double infoAzi = info.getAzimuth();
             if ((infoLat >= latTopLeft & infoLat <= latBottRight)
             & (infoLon >= lonBottRight & infoLon <= lonTopLeft)) {
                 cnt++;
