@@ -31,7 +31,7 @@
 <body style="width: 100%; height: 100%;">
 
 <!-- 지도  -->
-<div style="width: 100%; height: 100%; display: flex; justify-content: center; z-index: 1;" onclick="f2()";>
+<div style="width: 100%; height: 100%; display: flex; justify-content: center; z-index: 1;">
     <div id="map" style="width: 100%; height: 100%;"></div>
 </div>
 
@@ -52,7 +52,6 @@
                 </button>
             </div>
             <!-- 토글 버튼  -->
-
             <button class="btn mr-3" type="button"  style="background-color: #F8F9FC; border-radius: 0px 5px 5px 0px; z-index: 2;" onclick="toggleMenu('collapseWidthExample');">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
@@ -119,11 +118,9 @@
         if(e.style.display == 'flex'){
             e.style.display = 'none';
             b.style.display = 'none';
-        }
-    else {
+        } else {
             e.style.display = 'flex';
             b.style.display = 'flex';
-
         }
     }
 
@@ -142,6 +139,8 @@
         }
 
     }
+
+
 
 
 </script>
@@ -184,10 +183,10 @@
         var percentage = pointList[i].percentage;
         var cus_content = '';
         if (percentage >= 200) {cus_content = '<div class="ex-mark"><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (150 <= percentage && percentage < 200) {cus_content = '<button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';}
-        else if (100 <= percentage && percentage < 150) {cus_content = '<button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button>';}
-        else if (50 <= percentage && percentage < 100) {cus_content = '<button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button>';}
-        else { cus_content = '<button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button>';}
+        else if (150 <= percentage && percentage < 200) {cus_content = '<div class="ex-mark"><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (100 <= percentage && percentage < 150) {cus_content = '<div class="ex-mark"><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (50 <= percentage && percentage < 100) {cus_content = '<div class="ex-mark"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+        else { cus_content = '<div class="ex-mark"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
         // console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({

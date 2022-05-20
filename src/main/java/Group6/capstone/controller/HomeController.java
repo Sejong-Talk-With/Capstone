@@ -5,6 +5,8 @@ import Group6.capstone.domain.Point;
 import Group6.capstone.repository.InfoRepository;
 import Group6.capstone.service.InfoService;
 import Group6.capstone.service.PointService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,7 @@ public class HomeController {
     public String home(Model model) {
         List<Point> pointList = pointService.findAll();
         for (Point point : pointList) {
-            infoService.getLiveCount(point.getId());
+            infoService.getLiveCountHome(point.getId());
         }
         model.addAttribute("pointList", pointList);
         return "home";
@@ -64,14 +66,22 @@ public class HomeController {
 
     @GetMapping("/infos")
     @ResponseBody
-    public List<Info> infos() {
-        List<Info> infoList = infoRepository.selectAllSql();
-        return infoList;
+    public Result<List<Info>> infos() {
+        List<Info> infoList = infoService.getLiveCountAll();
+        Result<List<Info>> result = new Result<>(infoList.size(), infoList);
+        return result;
     }
 
     @GetMapping("/info-live/{id}")
     @ResponseBody
     public int infos(@PathVariable long id) {
          return infoService.getLiveCount(id);
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T>{ // 한번 감싸주기 위함. 그냥 List를 반환하면 JSON으로 list만 반환 되므로 유연성이 떨어짐. 추후에 count등 추가하기 위해선 감싸줘야함
+        private int count;
+        private T data;
     }
 }
