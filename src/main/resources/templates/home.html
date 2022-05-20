@@ -95,6 +95,14 @@
     </div>
 </div>
 
+<div id="wrap1">
+    <div class="title-box">
+        <div class='wave -one'></div>
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
+    </div>
+</div>
+
 
 
 
@@ -182,11 +190,11 @@
 
         var percentage = pointList[i].percentage;
         var cus_content = '';
-        if (percentage >= 200) {cus_content = '<div class="ex-mark"><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (150 <= percentage && percentage < 200) {cus_content = '<div class="ex-mark"><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (100 <= percentage && percentage < 150) {cus_content = '<div class="ex-mark"><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
-        else if (50 <= percentage && percentage < 100) {cus_content = '<div class="ex-mark"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
-        else { cus_content = '<div class="ex-mark"><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+        if (percentage >= 200) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-danger point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (150 <= percentage && percentage < 200) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-warning point\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (100 <= percentage && percentage < 150) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-secondary point\" style= \"background-color: #5c78cc !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal'+id+'\')\";><span class="text1">'+percentage+'%</span></button></div>';}
+        else if (50 <= percentage && percentage < 100) {cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
+        else { cus_content = '<div style="display: flex; justify-content: center; align-items: center"><div id="wrap1"><div class=\"title-box\"><div class=\"wave -one\"></div><div class=\"wave -two\"></div><div class=\"wave -three\"></div></div></div></div><button class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\"onclick=\"togglePoint(\'pointModal' + id + '\')\";><span class="text1">' + percentage + '%</span></button></div>';}
         // console.log(id, latitude, longitude, cus_position, percentage, cus_content);
 
         new kakao.maps.CustomOverlay({
@@ -194,6 +202,7 @@
             content: cus_content,
         }).setMap(map);
     }
+
 
     function search_place() {
         var keyword = $("#search_keyword").val()
@@ -227,79 +236,27 @@
         var level = map.getLevel();
         var p = document.querySelectorAll('.point');
         var t1 = document.querySelectorAll('.text1');
-        var ex = document.querySelectorAll('.ex-mark');
-        if(level==1){
+        var wave = document.querySelectorAll('.wave');
+        console.log(level);
+        if(level<=1){
             for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '60px';
-                p[i].style.height = '60px';
-
-                ex[i].style.width = '70px';
-                ex[i].style.height = '70px';
-                t1[i].style.fontSize = "18px";
+                t1[i].style.fontSize = '10px';
             }
         }
-        else if(level==2){
+        else if(level<=2){
             for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '40px';
-                p[i].style.height = '40px';
-
-                ex[i].style.width = '50px';
-                ex[i].style.height = '50px';
-
-                t1[i].style.fontSize = "15px";
+                t1[i].style.fontSize = '12px';
             }
         }
-        else if(level==3){
+        else if(level<=3){
             for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '30px';
-                p[i].style.height = '30px';
-                ex[i].style.width = '40px';
-                ex[i].style.height = '40px';
-                t1[i].style.fontSize = "12px";
+
             }
 
         }
-        else if(level==4){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '25px';
-                p[i].style.height = '25px';
-                ex[i].style.width = '35px';
-                ex[i].style.height = '35px';
-                t1[i].style.fontSize = "10px";
-            }
 
-        }
-        else if(level==5){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '10px';
-                p[i].style.height = '10px';
-                ex[i].style.width = '20px';
-                ex[i].style.height = '20px';
-                t1[i].style.fontSize = "8px";
-            }
 
-        }
-        else if(level==6){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '5px';
-                p[i].style.height = '5px';
-                ex[i].style.width = '15px';
-                ex[i].style.height = '15px';
-                t1[i].style.fontSize = "1px";
-            }
-
-        }
-        else if(level==7){
-            for (var i=0; i<pointList.length; i++) {
-                p[i].style.width = '1px';
-                p[i].style.height = '1px';
-                ex[i].style.width = '5px';
-                ex[i].style.height = '5px';
-                t1[i].style.fontSize = "0px";
-            }
-
-        }
-    }, 100);
+    }, 500);
 </script>
 
 </body>
