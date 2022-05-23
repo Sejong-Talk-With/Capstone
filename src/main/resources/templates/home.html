@@ -95,14 +95,6 @@
     </div>
 </div>
 
-<div id="wrap1">
-    <div class="title-box">
-        <div class='wave -one'></div>
-        <div class='wave -two'></div>
-        <div class='wave -three'></div>
-    </div>
-</div>
-
 
 
 
@@ -208,6 +200,126 @@
     }
 
     var interval;
+    $( document ).ready(function start_detection() {
+            $.ajax({
+                url: '/infos',
+                type: "GET"
+            })
+                .done(function (response) {
+                    console.log(response)
+                    for (var i = 0; i < pointList.length; i++) {
+                        if ($('#point' + pointList[i].id).css('visibility') == 'visible')  {
+                            $('#point' + pointList[i].id).attr("style", "visibility: hidden");
+                        }
+                    }
+
+                    if (response.count != 0) {
+                        var infoLon = response.data[0].lon;
+                        var infoLat = response.data[0].lat;
+                        var infoAzi = response.data[0].azimuth;
+                        var infoCnt = response.count;
+
+                        for (var i = 0; i < pointList.length; i++) {
+                            var lonTopLeft = pointList[i].lonTopLeft;
+                            var latTopLeft = pointList[i].latTopLeft;
+                            var lonBottRight = pointList[i].lonBottRight;
+                            var latBottRight = pointList[i].latBottRight;
+                            var percentage = Math.round((infoCnt/pointList[i].avgCount)*100);
+
+                            if ((infoLat >= latTopLeft & infoLat <= latBottRight)
+                                & (infoLon >= lonBottRight & infoLon <= lonTopLeft)) {
+                                if (pointList[i].place == '애지헌' && (infoAzi > 225 && infoAzi < 315)) {
+                                    if (percentage >= 200) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (150 <= percentage && percentage < 200) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (100 <= percentage && percentage < 150) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" style= \"background-color: #5c78cc !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (50 <= percentage && percentage < 100) {
+                                        $('#btn' + pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" style= \"background-color: green !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal' + pointList[i].id + '\')\"><span class="text1">' + percentage + '%</span></button>'
+                                        );
+                                    }
+                                    else {
+                                        $('#btn' + pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" style= \"background-color: green !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal' + pointList[i].id + '\')\"><span class="text1">' + percentage + '%</span></button>'
+                                        );
+                                    }
+                                    $('#point' + pointList[i].id).attr("style", "visibility: visible");
+                                    break;
+                                } else if (pointList[i].place == 'AI센터' && ((infoAzi > 315 && infoAzi < 360) || (infoAzi > 0 && infoAzi < 45))) {
+                                    if (percentage >= 200) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (150 <= percentage && percentage < 200) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (100 <= percentage && percentage < 150) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-primary point\" style= \"background-color: #5c78cc !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (50 <= percentage && percentage < 100) {
+                                        $('#btn' + pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal' + pointList[i].id + '\')\"><span class="text1">' + percentage + '%</span></button>'
+                                        );
+                                    }
+                                    else {
+                                        $('#btn' + pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal' + id + '\')\"><span class="text1">' + percentage + '%</span></button>'
+                                        );
+                                    }
+                                    $('#point' + pointList[i].id).attr("style", "visibility: visible");
+                                    break;
+                                } else {
+                                    if (percentage >= 200) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (150 <= percentage && percentage < 200) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-danger point\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (100 <= percentage && percentage < 150) {
+                                        $('#btn'+pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-primary point\" style= \"background-color: #5c78cc !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal'+pointList[i].id+'\')\"><span class="text1">'+ percentage +'%</span></button>'
+                                        );
+                                    }
+                                    else if (50 <= percentage && percentage < 100) {
+                                        $('#btn' + pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal' + pointList[i].id + '\')\"><span class="text1">' + percentage + '%</span></button>'
+                                        );
+                                    }
+                                    else {
+                                        $('#btn' + pointList[i].id).replaceWith(
+                                            '<button id="btn' + pointList[i].id + '" class =\"btn btn-success point\" style= \"background-color: green !important;\" type=\"button\" onclick=\"togglePoint(\'pointModal' + pointList[i].id + '\')\"><span class="text1">' + percentage + '%</span></button>'
+                                        );
+                                    }
+                                    $('#point' + pointList[i].id).attr("style", "visibility: visible");
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                });
+    })
+
     $( document ).ready(function detection_change() {
         interval = setInterval(function () {
             $.ajax({
