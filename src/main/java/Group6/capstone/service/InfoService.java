@@ -21,7 +21,6 @@ public class InfoService {
 
     public List<Info> getLiveCountAll() {
         return infoRepository.getLiveInfo();
-
     }
     public int getLiveCountHome(Long id) {
         Point point = pointService.findOne(id);
