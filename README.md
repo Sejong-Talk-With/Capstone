@@ -1,3 +1,6 @@
+# Capstone
+- Edge Computing을 통한 실시간 혼잡도 측정
+
 #### CLI - Cloud Setting
 
 1. Upgrade apt-get and install idk ( For ubuntu )
