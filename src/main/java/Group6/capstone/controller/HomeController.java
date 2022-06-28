@@ -39,7 +39,7 @@ public class HomeController {
         return "home";
     }
 
-    // statics service (by point.id), default statics service -> ("세종대 정문")
+    // statics service (by point.id. default="세종대 정문"'s id)
     @GetMapping(path = {"/statics/{id}", "/static"})
     public String statics(@PathVariable(value = "id", required = false) Long id, Model model) {
         Point point = pointService.findByName("세종대 정문"); // find one Point (if data has value)
