@@ -3,16 +3,9 @@ package Group6.capstone.repository;
 import Group6.capstone.domain.Point;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,8 +13,7 @@ public class PointRepository {
 
     private final EntityManager em;
 
-    private Map<String, List<Integer>> staticsData = new HashMap<>();
-
+    /*
     @PostConstruct
     public void createData() {
         staticsData.put("광개토관", Arrays.asList(13, 9, 11, 10, 12, 7, 13, 8));
@@ -33,7 +25,7 @@ public class PointRepository {
 
     public List<Integer> getStaticsData(String name) {
         return staticsData.get(name);
-    }
+    }*/
 
     public List<Point> findAll() {
         return em.createQuery("select p from Point p", Point.class).getResultList();

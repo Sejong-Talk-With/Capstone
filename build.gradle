@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0' //for tracking sql query
 	runtimeOnly 'mysql:mysql-connector-java' // for Real _ in AWS RDS
 //	implementation 'com.h2database:h2' // for Test _ in Local DB
 	annotationProcessor 'org.projectlombok:lombok'
