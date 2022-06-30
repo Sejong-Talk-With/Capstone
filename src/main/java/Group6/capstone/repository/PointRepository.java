@@ -39,4 +39,6 @@ public class PointRepository {
         return em.createQuery("select p from Point p where p.place = :name", Point.class)
                 .setParameter("name", name).getSingleResult();
     }
+
+
 }

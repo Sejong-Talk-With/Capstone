@@ -1,10 +1,12 @@
 package Group6.capstone.repository;
 
 import Group6.capstone.domain.Info;
+import Group6.capstone.domain.Point;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor

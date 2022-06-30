@@ -36,6 +36,12 @@ public class Info {
     @JoinColumn(name = "point_id")
     private Point point;
 
+    //==연관관계 메서드==//
+    private void setPoint(Point point) {
+        this.point = point;
+        point.getInfos().add(this);
+    }
+
     //== 생성 메서드 ==//
     public static Info createInfo(Point point, Temp temp) {
         Info info = new Info();
@@ -51,11 +57,4 @@ public class Info {
         info.setPoint(point);
         return info;
     }
-
-    //==연관관계 메서드==//
-    private void setPoint(Point point) {
-        this.point = point;
-        point.getInfos().add(this);
-    }
-
 }

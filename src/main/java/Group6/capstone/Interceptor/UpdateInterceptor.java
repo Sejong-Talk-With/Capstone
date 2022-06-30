@@ -21,8 +21,8 @@ public class UpdateInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         List<Point> pointList = pointService.findAll(); // find all Point
         for (Point point : pointList) { // each point
-            infoService.createInfo(point); // make 연관관계 with Point (새로 생성된 Temp들에 대해서 새로운 Info 생성)
-            pointService.updatePoint(point); // point의 lastCommittedTime update (최근 Info update 시간 update)
+            infoService.createInfo(point.getId()); // make 연관관계 with Point (새로 생성된 Temp들에 대해서 새로운 Info 생성)
+            pointService.updatePoint(point.getId()); // point의 lastCommittedTime update (최근 Info update 시간 update)
         }
         return true;
     }

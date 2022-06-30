@@ -4,6 +4,7 @@ import Group6.capstone.domain.Info;
 import Group6.capstone.domain.Point;
 import Group6.capstone.domain.Temp;
 import Group6.capstone.repository.InfoRepository;
+import Group6.capstone.repository.PointRepository;
 import Group6.capstone.repository.TempRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,11 @@ import java.util.List;
 public class InfoService {
 
     private final InfoRepository infoRepository;
+    private final PointRepository pointRepository;
     private final TempRepository tempRepository;
 
-    public void createInfo(Point point) {
+    public void createInfo(Long id) {
+        Point point = pointRepository.findOne(id);
         List<Temp> lastData = tempRepository.getLastData(point.getLastCommittedTime());
         double lonTopLeft = point.getLonTopLeft();
         double latTopLeft = point.getLatTopLeft();
@@ -34,6 +37,7 @@ public class InfoService {
             for (Temp temp : lastData) {
                 double tempLat = temp.getLat();
                 double tempLon = temp.getLon();
+
                 if ((tempLat >= latTopLeft & tempLat <= latBottRight)
                         & (tempLon >= lonBottRight & tempLon <= lonTopLeft)) {
                     Info info = Info.createInfo(point, temp);
@@ -45,4 +49,6 @@ public class InfoService {
             point.changePercentage((int) Math.round((perTemp) * 100));
         }
     }
+
+
 }

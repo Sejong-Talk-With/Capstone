@@ -30,12 +30,6 @@ public class HomeController {
     // Map service (Home)
     @RequestMapping("/")
     public String home(Model model) {
-        List<Point> pointList = pointService.findAll(); // find all Point
-        Map<Long, Integer> pointLiveCount = new HashMap<>();
-        for (Point point : pointList) { // each point
-            pointLiveCount.put(point.getId(), tempService.getLiveCountHome(point.getId())); // get counted number on live
-        }
-        model.addAttribute("allCounted", pointLiveCount);
         return "home";
     }
 

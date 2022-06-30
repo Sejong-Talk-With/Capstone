@@ -2,6 +2,7 @@ package Group6.capstone.service;
 
 import Group6.capstone.domain.Info;
 import Group6.capstone.domain.Point;
+import Group6.capstone.domain.Temp;
 import Group6.capstone.repository.InfoRepository;
 import Group6.capstone.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class PointService {
 
     private final PointRepository pointRepository;
-    private final InfoRepository infoRepository;
 
     public List<Point> findAll() {
         return pointRepository.findAll();
@@ -67,7 +67,9 @@ public class PointService {
         return statics;// [1일전, 2일전, ... , 5일전, 1시간전, 2시간전, 3시간전]
     }
 
-    public void updatePoint(Point point) {
+    @Transactional
+    public void updatePoint(Long id) {
+        Point point = pointRepository.findOne(id);
         point.changeLastCommittedTime(LocalDateTime.now());
     }
 }

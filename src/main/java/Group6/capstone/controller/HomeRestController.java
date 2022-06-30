@@ -25,7 +25,7 @@ public class HomeRestController {
 
     @GetMapping("/infos")
     public Result<List<Temp>> temps() {
-        List<Temp> tempList = tempService.getLiveCountAll();
+        List<Temp> tempList = tempService.getLiveData();
         return new Result<>(tempList.size(), tempList);
     }
 

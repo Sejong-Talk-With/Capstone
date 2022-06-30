@@ -1,4 +1,4 @@
-package Group6.capstone;
+package Group6.capstone.config;
 
 import Group6.capstone.Interceptor.UpdateInterceptor;
 import lombok.RequiredArgsConstructor;
